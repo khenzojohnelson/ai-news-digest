@@ -1,44 +1,55 @@
 import os
-from groq import Groq
 from datetime import datetime
+import httpx
+from groq import Groq
+
 
 class AnalystAgent:
     def __init__(self):
         api_key = os.environ.get('GROQ_API_KEY')
         if not api_key:
             raise ValueError("❌ GROQ_API_KEY tidak ditemukan!")
-        
-        self.client = Groq(api_key=api_key)
+
+        # ✅ Gunakan httpx.Client() manual tanpa proxies
+        self.http_client = httpx.Client(timeout=60.0)
+        self.client = Groq(api_key=api_key, http_client=self.http_client)
         self.model = "llama-3.1-70b-versatile"
-    
+
+        # (opsional, buat debugging)
+        try:
+            import groq
+            print(f"🧩 Groq SDK version aktif: {groq.__version__}")
+        except Exception:
+            pass
+
     def analyze(self, verified_news):
         print("🧠 Menganalisis berita...")
-        
+
         selected = self._select_top_news(verified_news)
         analyses = []
-        
+
         for i, news in enumerate(selected, 1):
             category = "NASIONAL" if i == 1 else f"INTERNASIONAL #{i-1}"
             print(f"  Menganalisis berita {i}/3...")
-            
+
             analysis = self._generate_analysis(news, category)
             analyses.append(analysis)
-        
+
         final_message = self._format_message(analyses)
-        
+
         print("✅ Analisis selesai!")
         return final_message
-    
+
     def _select_top_news(self, verified_news):
         selected = []
-        
-        if verified_news['nasional']:
+
+        if verified_news.get('nasional'):
             selected.append(verified_news['nasional'][0])
-        
-        selected.extend(verified_news['internasional'][:2])
-        
+
+        selected.extend(verified_news.get('internasional', [])[:2])
+
         return selected
-    
+
     def _generate_analysis(self, news, category):
         prompt = f"""Kamu adalah analis berita yang sangat cerdas dan reflektif. Analisis berita ini dengan struktur berikut:
 
@@ -85,31 +96,33 @@ PENTING:
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
-                max_tokens=1500
+                max_tokens=1500,
             )
-            
-            analysis = response.choices[0].message.content
+
+            # Groq SDK kadang pakai format message atau content berbeda
+            message = response.choices[0].message
+            analysis = getattr(message, "content", str(message))
+
             return f"{'🇮🇩' if 'NASIONAL' in category else '🌍'} **BERITA {category}**\n\n{analysis}"
-        
+
         except Exception as e:
             print(f"❌ Error analisis: {e}")
-            return f"❌ Gagal menganalisis berita: {news['title']}"
-    
+            return f"❌ Gagal menganalisis berita: {news.get('title', 'Tidak diketahui')}"
+
     def _format_message(self, analyses):
         header = f"""🗞️ **AI Daily Digest — {datetime.now().strftime('%A, %d %B %Y')}**
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 """
-        
+
         separator = "\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-        
+
         footer = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🤖 *Powered by AI Multi-Agent System | Generated at {datetime.now().strftime('%H:%M WIB')}*
 """
-        
+
         body = separator.join(analyses)
-        
+
         return header + body + footer
