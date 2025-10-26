@@ -13,7 +13,7 @@ class AnalystAgent:
         # ✅ Gunakan httpx.Client() manual tanpa proxies
         self.http_client = httpx.Client(timeout=60.0)
         self.client = Groq(api_key=api_key, http_client=self.http_client)
-        self.model = "llama-3.1-70b-versatile"
+        self.model = "llama-3.2-70b-text-preview"
 
         # (opsional, buat debugging)
         try:
