@@ -32,6 +32,5 @@ jobs:
         GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_OAUTH_TOKEN_JSON }}
         GOOGLE_DRIVE_FOLDER_ID: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
       run: |
-        echo "$GOOGLE_OAUTH_CLIENT_SECRET" > client_secret.json
         echo "$GOOGLE_OAUTH_TOKEN_JSON" > token.json
         python main.py
