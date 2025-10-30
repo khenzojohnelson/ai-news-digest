@@ -125,7 +125,7 @@ Berikan penutup yang merangkum:
 - Bahasa Indonesia yang **natural, reflektif, cerdas, dan engaging.**
 - dan jika ada istilah asing untuk suatu konsep, maka sangat disarankan untuk menggunakan bahasa asing tersebut (agar nuansa tepat)  
 - Gunakan emoji di setiap bagian untuk menambah daya tarik visual.
-- Panjang total **2500 sampai 3000 kata**. 
+- Panjang total **500 sampai 1500 kata tergantung seberapa penting berita ini**. 
 - Hindari repetisi dan buat pembaca merasa mendapatkan “pandangan baru”.
 
 """
@@ -134,7 +134,7 @@ Berikan penutup yang merangkum:
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
-                max_tokens=5000,
+                max_tokens=2500,
             )
 
             # Groq SDK kadang pakai format message atau content berbeda
