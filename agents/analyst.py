@@ -13,7 +13,7 @@ class AnalystAgent:
         # ✅ Gunakan httpx.Client() manual tanpa proxies
         self.http_client = httpx.Client(timeout=60.0)
         self.client = Groq(api_key=api_key, http_client=self.http_client)
-        self.model = "groq/compound"
+        self.model = "openai/gpt-oss-120b"
 
         # (opsional, buat debugging)
         try:
