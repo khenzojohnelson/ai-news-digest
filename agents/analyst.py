@@ -52,83 +52,39 @@ class AnalystAgent:
 
     def _generate_analysis(self, news, category):
         prompt = f"""
-Anda adalah seorang **Profesor multidisipliner tingkat lanjut** dengan keahlian mendalam di bidang ilmu sosial, politik, ekonomi, filsafat, dan psikologi modern.
-Tugas Anda adalah melakukan **analisis reflektif dan teoritis mendalam terhadap berita berikut**, dengan gaya penulisan yang menarik, bernuansa akademis, namun tetap komunikatif dan alami dalam bahasa Indonesia, dan jika ada istilah asing untuk suatu konsep, maka sangat disarankan untuk menggunakan bahasa asing tersebut (agar nuansa tepat) 
+You are a **multidisciplinary professor and reflective essayist** with deep expertise in social sciences, politics, economics, modern philosophy, and psychology.
 
-Gunakan struktur markdown dengan heading dan emoji untuk membuat hasil mudah dibaca.
+Your task is to write a **reflective analytical essay in English (IELTS level 7.0–8.0)** based on the following news article.
 
----
-
-### 📰 **DATA BERITA**
-**Judul:** {news['title']}
-**Sumber:** [{news['source']}]({news['url']})
-**Ringkasan Singkat:** {news['summary']}
-
----
-
-## 🧩 **Analisis Terstruktur (5W+1H)**
-Jelaskan dengan detail dan reflektif:
-- **What:** Apa inti peristiwa atau isu utama?
-- **Who:** Siapa aktor atau institusi kunci yang terlibat, dan apa kepentingannya?
-- **When:** Kapan peristiwa terjadi dan bagaimana konteks waktu mempengaruhinya?
-- **Where:** Di mana terjadi, dan adakah signifikansi geopolitik atau sosial di balik lokasi tersebut?
-- **Why:** Mengapa hal ini bisa terjadi, apa faktor penyebab mendalam (struktural, historis, ideologis)?
-- **How:** Bagaimana prosesnya berlangsung, siapa memengaruhi siapa, dan bagaimana narasi dibentuk?
+The essay must:
+- Use **a narrative-argumentative style**, similar to **George Orwell, Yuval Noah Harari, or Zadie Smith**.
+- Be written in **natural, thoughtful, and literary English** (not robotic or mechanical).
+- Contain a clear flow of reasoning — observation → interpretation → reflection.
+- Integrate **3-4 relevant theoretical perspectives** (e.g., political economy, social psychology, media theory, etc.) — but do it organically within the prose.
+- Maintain a balance between **fact and interpretation** — analytical yet humane.
+- Avoid using bullet points or sections; make it **a single coherent essay**.
+- Length: **500–1500 words**, depending on the significance of the news.
 
 ---
 
-## 🧠 **Konteks, Teori, dan Penjelasan Istilah**
-- Jika terdapat istilah, organisasi, kebijakan, atau nama tokoh, jelaskan secara singkat konteksnya (asal-usul, tujuan, atau perannya dalam isu ini).
-- Kaitkan peristiwa dengan **berbagai teori sosial, politik, ekonomi, atau psikologi relevan**. 
-  Misalnya teori hegemoni (Gramsci), framing media (Entman), perilaku kolektif (Durkheim), atau rasionalitas terbatas (Herbert Simon).
-- Gunakan minimal **2-3 teori atau pendekatan** lintas disiplin untuk memperkaya analisis.
-- Sertakan kutipan atau referensi konseptual (mis. *“menurut Pierre Bourdieu dalam Distinction (1979)…”* atau *“sesuai teori agenda-setting McCombs & Shaw (1972)”*).
+### 📰 NEWS DATA
+**Title:** {news['title']}
+**Source:** {news['source']}
+**URL:** {news['url']}
+**Summary:** {news['summary']}
 
 ---
 
-## 🔍 **Analisis Mendalam Proses demi Proses**
-Uraikan **alur sebab-akibat dan dinamika kekuasaan** yang muncul:
-1. Identifikasi akar masalah.
-2. Jelaskan proses berkembangnya isu.
-3. Tunjukkan bagaimana faktor sosial, ekonomi, politik, dan psikologis saling mempengaruhi.
-4. Analisis persepsi publik, framing media, serta narasi kekuasaan yang membentuk opini.
-5. Sajikan **pandangan baru atau insight unik** yang jarang dibahas di media umum.
+### WRITING INSTRUCTIONS
+1. Begin with an engaging opening that captures the essence or irony of the event.
+2. Gradually expand to deeper layers — historical, psychological, or ideological.
+3. Weave in theoretical insights subtly (e.g., “As Gramsci might argue…” or “In the spirit of Weber’s rationalization…”).
+4. End with a reflective tone — what does this event say about our society, power, or human nature?
+5. The essay should feel **like a conversation with an intelligent, curious reader**, not a lecture.
 
 ---
-
-## ⚖️ **Pertimbangan Kritis & Multi-Perspektif**
-- **Bias:** Apa potensi bias dari sumber berita atau framing narasi?
-- **Dampak:** Siapa yang diuntungkan atau dirugikan (secara ekonomi, politik, sosial)?
-- **Perspektif Alternatif:** Sajikan sudut pandang lain (mis. dari aktor, akademisi, atau rakyat biasa).
-- **Nilai Etis:** Apakah ada dilema moral, hak asasi, atau nilai kemanusiaan yang terlibat?
-
----
-
-## 💡 **Refleksi & Pembelajaran Pribadi**
-Tuliskan 2–3 paragraf reflektif:
-- Apa pesan moral dan nilai yang bisa dipetik dari isu ini?
-- Bagaimana peristiwa ini bisa menginspirasi kita untuk berpikir lebih kritis, empatik, atau bertindak lebih bijak?
-- Apa yang bisa dipelajari untuk pengembangan diri atau cara memandang masyarakat secara lebih luas?
-
----
-
-## 🧭 **Rangkuman Akhir**
-Berikan penutup yang merangkum:
-- Inti berita dan implikasinya.
-- Teori dan konsep kunci yang digunakan dalam analisis.
-- Kesimpulan umum dari analisis mendalam.
-- Nilai moral dan pembelajaran utama bagi pembaca.
-
----
-
-**Gaya penulisan:**
-- Bahasa Indonesia yang **natural, reflektif, cerdas, dan engaging.**
-- dan jika ada istilah asing untuk suatu konsep, maka sangat disarankan untuk menggunakan bahasa asing tersebut (agar nuansa tepat)  
-- Gunakan emoji di setiap bagian untuk menambah daya tarik visual.
-- Panjang total **500 sampai 1500 kata tergantung seberapa penting berita ini**. 
-- Hindari repetisi dan buat pembaca merasa mendapatkan “pandangan baru”.
-
 """
+
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
