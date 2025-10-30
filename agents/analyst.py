@@ -51,52 +51,90 @@ class AnalystAgent:
         return selected
 
     def _generate_analysis(self, news, category):
-        prompt = f"""Kamu adalah analis berita yang sangat cerdas dan reflektif. Analisis berita ini dengan struktur berikut:
+        prompt = f"""
+Anda adalah seorang **Profesor multidisipliner tingkat lanjut** dengan keahlian mendalam di bidang ilmu sosial, politik, ekonomi, filsafat, dan psikologi modern.
+Tugas Anda adalah melakukan **analisis reflektif dan teoritis mendalam terhadap berita berikut**, dengan gaya penulisan yang menarik, bernuansa akademis, namun tetap komunikatif dan alami dalam bahasa Indonesia, dan jika ada istilah asing untuk suatu konsep, maka sangat disarankan untuk menggunakan bahasa asing tersebut (agar nuansa tepat) 
 
-BERITA:
-Judul: {news['title']}
-Sumber: {news['source']}
-Ringkasan: {news['summary']}
+Gunakan struktur markdown dengan heading dan emoji untuk membuat hasil mudah dibaca.
 
-TUGAS:
-Buat analisis dalam format markdown. Gunakan emoji untuk readability.
+---
 
-STRUKTUR (Setiap poin-poin diberikan analisis jelas dan detail agar berita tidak membosankan)
+### 📰 **DATA BERITA**
+**Judul:** {news['title']}
+**Sumber:** [{news['source']}]({news['url']})
+**Ringkasan Singkat:** {news['summary']}
 
-📰 **{news['title']}**
-🔗 [{news['source']}]({news['url']})
+---
 
-🧩 **Analisis 5W+1H:**
-- **What:** [Apa yang terjadi?]
-- **Who:** [Siapa yang terlibat?]
-- **When:** [Kapan kejadiannya?]
-- **Where:** [Di mana lokasinya?]
-- **Why:** [Mengapa hal ini terjadi?]
-- **How:** [Bagaimana prosesnya?]
+## 🧩 **Analisis Terstruktur (5W+1H)**
+Jelaskan dengan detail dan reflektif:
+- **What:** Apa inti peristiwa atau isu utama?
+- **Who:** Siapa aktor atau institusi kunci yang terlibat, dan apa kepentingannya?
+- **When:** Kapan peristiwa terjadi dan bagaimana konteks waktu mempengaruhinya?
+- **Where:** Di mana terjadi, dan adakah signifikansi geopolitik atau sosial di balik lokasi tersebut?
+- **Why:** Mengapa hal ini bisa terjadi, apa faktor penyebab mendalam (struktural, historis, ideologis)?
+- **How:** Bagaimana prosesnya berlangsung, siapa memengaruhi siapa, dan bagaimana narasi dibentuk?
 
-🧠 **Konteks & Teori:**
-[Kaitkan dengan teori ekonomi/politik/psikologi yang relevan. Jelaskan dalam 2-3 kalimat.]
+---
 
-💡 **Insight & Refleksi:**
-[Apa pembelajaran personal yang bisa diambil? Bagaimana relevansinya dengan kehidupan sehari-hari? 2-3 kalimat.]
+## 🧠 **Konteks, Teori, dan Penjelasan Istilah**
+- Jika terdapat istilah, organisasi, kebijakan, atau nama tokoh, jelaskan secara singkat konteksnya (asal-usul, tujuan, atau perannya dalam isu ini).
+- Kaitkan peristiwa dengan **berbagai teori sosial, politik, ekonomi, atau psikologi relevan**. 
+  Misalnya teori hegemoni (Gramsci), framing media (Entman), perilaku kolektif (Durkheim), atau rasionalitas terbatas (Herbert Simon).
+- Gunakan minimal **2-3 teori atau pendekatan** lintas disiplin untuk memperkaya analisis.
+- Sertakan kutipan atau referensi konseptual (mis. *“menurut Pierre Bourdieu dalam Distinction (1979)…”* atau *“sesuai teori agenda-setting McCombs & Shaw (1972)”*).
 
-⚖️ **Pertimbangan Kritis:**
-- **Bias:** [Potensi bias dari sumber?]
-- **Dampak:** [Siapa yang diuntungkan/dirugikan?]
-- **Perspektif Alternatif:** [Sudut pandang lain yang mungkin?]
+---
 
-PENTING:
-- Gunakan bahasa Indonesia yang natural dan engaging
-- Total panjang: 250-400 kata
-- Fokus pada insight, bukan hanya ringkasan
+## 🔍 **Analisis Mendalam Proses demi Proses**
+Uraikan **alur sebab-akibat dan dinamika kekuasaan** yang muncul:
+1. Identifikasi akar masalah.
+2. Jelaskan proses berkembangnya isu.
+3. Tunjukkan bagaimana faktor sosial, ekonomi, politik, dan psikologis saling mempengaruhi.
+4. Analisis persepsi publik, framing media, serta narasi kekuasaan yang membentuk opini.
+5. Sajikan **pandangan baru atau insight unik** yang jarang dibahas di media umum.
+
+---
+
+## ⚖️ **Pertimbangan Kritis & Multi-Perspektif**
+- **Bias:** Apa potensi bias dari sumber berita atau framing narasi?
+- **Dampak:** Siapa yang diuntungkan atau dirugikan (secara ekonomi, politik, sosial)?
+- **Perspektif Alternatif:** Sajikan sudut pandang lain (mis. dari aktor, akademisi, atau rakyat biasa).
+- **Nilai Etis:** Apakah ada dilema moral, hak asasi, atau nilai kemanusiaan yang terlibat?
+
+---
+
+## 💡 **Refleksi & Pembelajaran Pribadi**
+Tuliskan 2–3 paragraf reflektif:
+- Apa pesan moral dan nilai yang bisa dipetik dari isu ini?
+- Bagaimana peristiwa ini bisa menginspirasi kita untuk berpikir lebih kritis, empatik, atau bertindak lebih bijak?
+- Apa yang bisa dipelajari untuk pengembangan diri atau cara memandang masyarakat secara lebih luas?
+
+---
+
+## 🧭 **Rangkuman Akhir**
+Berikan penutup yang merangkum:
+- Inti berita dan implikasinya.
+- Teori dan konsep kunci yang digunakan dalam analisis.
+- Kesimpulan umum dari analisis mendalam.
+- Nilai moral dan pembelajaran utama bagi pembaca.
+
+---
+
+**Gaya penulisan:**
+- Bahasa Indonesia yang **natural, reflektif, cerdas, dan engaging.**
+- dan jika ada istilah asing untuk suatu konsep, maka sangat disarankan untuk menggunakan bahasa asing tersebut (agar nuansa tepat)  
+- Gunakan emoji di setiap bagian untuk menambah daya tarik visual.
+- Panjang total **2500 sampai 3000 kata**. 
+- Hindari repetisi dan buat pembaca merasa mendapatkan “pandangan baru”.
+
 """
-
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
-                max_tokens=1500,
+                max_tokens=5000,
             )
 
             # Groq SDK kadang pakai format message atau content berbeda
